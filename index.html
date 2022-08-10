@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Carousal_splide</title>
+        <script src="./splide-4.0.1/dist/js/splide.min.js"></script>
+        <link rel="stylesheet" href="./splide-4.0.1/dist/css/splide.min.css">
+        <link rel="stylesheet" href="style.css">
+    </head>
+<body>
+
+    <section id="main-carousel" class="splide" aria-label="My Awesome Gallery">
+        <div class="splide__track">
+          <ul class="splide__list">
+            <li class="splide__slide">
+              <h5>a image1</h5>
+            </li>
+            <li class="splide__slide">
+                <h5>a image2</h5>
+            </li>
+            <li class="splide__slide">
+                <h5>a image3</h5>
+            </li>
+            <li class="splide__slide">
+                <h5>a image4</h5>
+            </li>
+          </ul>
+        </div>
+      </section>
+      
+      
+      <ul id="thumbnails" class="thumbnails">
+        <li class="thumbnail">
+            <h5>here is my context 1</h5>
+        </li>
+        <li class="thumbnail">
+            <h5>here is my context 2</h5>
+        </li>
+        <li class="thumbnail">
+            <h5>here is my context 3</h5>
+        </li>
+        <li class="thumbnail">
+            <h5>here is my context 4</h5>
+        </li>
+      </ul>
+      <script>
+          var splide =  new Splide( '#main-carousel', {
+                type:'loop',
+                perPage: 3,
+                perMove:1,
+                width:500,
+                start:1,
+                focus:'center',
+                gap:'100px',
+                // autoplay:true,
+                interval:1500,
+                padding:50,
+                isNavigation:true,
+                updateOnMove:true,
+                pagination: false,
+                } )
+            
+            var slides = document.getElementsByClassName('splide__slide');
+
+            var thumbnails = document.getElementsByClassName( 'thumbnail' );
+
+            var current;
+            var context;
+            
+            for ( var i = 0; i < thumbnails.length; i++ ) {
+            initThumbnail( thumbnails[ i ], i );
+            }
+
+            function initThumbnail( thumbnail, index ) {
+            thumbnail.addEventListener( 'click', function () {
+                splide.go( index );
+            } );
+            }
+
+            splide.on( 'mounted move', function () {
+            var thumbnail = thumbnails[ splide.index ];
+            var slide = slides[splide.index];
+
+            if ( thumbnail ) {
+                if ( context ) {
+                context.classList.remove( 'is-active' );
+                }
+
+                thumbnail.classList.add( 'is-active' );
+                context = thumbnail;
+            }
+            if ( slide ) {
+                if ( current ) {
+                    current.classList.remove( 'is-active' );
+                }
+
+                thumbnail.classList.add( 'is-active' );
+                current = thumbnail;
+            }
+
+
+            } );
+
+            splide.mount();
+
+      </script>
+</body>
+</html>
